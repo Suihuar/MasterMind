@@ -68,6 +68,8 @@ public class GamePanel extends JPanel implements MouseListener {
      * Reference to the game overlay shown when the state changes to GameWon or GameLost.
      */
     private GameEndedPanel gameEndedPanel;
+
+
     /**
      * When true will show the solution.
      */
@@ -79,14 +81,14 @@ public class GamePanel extends JPanel implements MouseListener {
      */
     public GamePanel() {
         setPreferredSize(new Dimension(AttemptPanel.PANEL_WIDTH, PANEL_HEIGHT));
-        setBackground(Color.GRAY);
+        setBackground(Color.decode("#7d4e29"));
         rand = new Random();
         createButtons();
         gameEndedPanel = new GameEndedPanel();
         restart();
         addMouseListener(this);
+        instance = this;
     }
-
     /**
      * Wipes all state data from any previous playing. Then generates a new solution,
      * and prepares a new attempt ready for play to start.
@@ -156,8 +158,8 @@ public class GamePanel extends JPanel implements MouseListener {
         }
         if(gameState == GameState.Playing)
             submitButton.paint(g);
-        else
-            gameEndedPanel.paint(g);
+//        else
+//            gameEndedPanel.paint(g);
         if(showCheat)
             solution.paint(g);
     }
@@ -173,14 +175,14 @@ public class GamePanel extends JPanel implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(gameState != GameState.Playing) return;
+        if (gameState!= GameState.Playing) return;
 
         int x = e.getX();
         int y = e.getY();
-        if(submitButton.isClicked(x,y)) {
+        if (submitButton.isClicked(x, y)) {
             handleSubmitClicked();
         } else {
-            checkForCycleButton(x,y,e.getButton() == MouseEvent.BUTTON1);
+            checkForCycleButton(x, y, e.getButton() == MouseEvent.BUTTON1);
         }
         repaint();
     }
@@ -201,20 +203,29 @@ public class GamePanel extends JPanel implements MouseListener {
         }
     }
 
+
+    public void handlePopUpClosed() {
+        restart();
+    }
+
     /**
      * Checks if the current attempt matches the solution to change to a won state.
      * Otherwise checks if the maximum attempts have been used to change to a loss state.
      * In any other case it will add a new attempt with addNewAttempt().
      */
     private void handleSubmitClicked() {
-        if(currentAttempt.getIsVictory()) {
+        if (currentAttempt.getIsVictory()) {
             gameState = GameState.GameWon;
-            gameEndedPanel.setVictory(true);
-        } else if(attempts.size() < MAXIMUM_ATTEMPTS) {
+            // 创建并显示弹出的胜利面板
+            PopupGameEndedPanel popup = new PopupGameEndedPanel((Frame) SwingUtilities.getWindowAncestor(this), true, solution);
+            popup.setVisible(true);
+        } else if (attempts.size() < MAXIMUM_ATTEMPTS) {
             addNewAttempt();
         } else {
             gameState = GameState.GameLost;
-            gameEndedPanel.setVictory(false);
+            // 创建并显示弹出的失败面板
+            PopupGameEndedPanel popup = new PopupGameEndedPanel((Frame) SwingUtilities.getWindowAncestor(this), false, solution);
+            popup.setVisible(true);
         }
     }
 
@@ -263,4 +274,10 @@ public class GamePanel extends JPanel implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    public static GamePanel getInstance() {
+        return instance;
+    }
+    private static GamePanel instance;
+
 }

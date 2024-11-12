@@ -114,10 +114,17 @@ public class AttemptPanel {
      * @param g Reference to the Graphics object for rendering.
      */
     public void paint(Graphics g) {
-        g.setColor(Color.BLACK);
+        Color current_color = getAttemptNumberColor(Integer.parseInt(attemptNumber));
+        g.setColor(current_color);
         g.setFont(font);
-        g.drawString(attemptNumber,5,yOffset+35);
+        g.drawString(attemptNumber, 5, yOffset + 35);
         puzzleCombination.paint(g);
-        resultPanel.paint(g);
+        resultPanel.paint(g, current_color);
+    }
+
+    public static Color getAttemptNumberColor(int attemptNumber) {
+        // 这里定义一个颜色数组，根据尝试次数选择颜色，你可以根据喜好调整颜色
+        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.PINK, Color.MAGENTA, Color.CYAN, Color.LIGHT_GRAY, Color.DARK_GRAY};
+        return colors[attemptNumber % 10];
     }
 }

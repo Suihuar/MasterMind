@@ -1,5 +1,6 @@
 import java.awt.*;
 
+
 /**
  * Master Mind
  * Author: Peter Mitchell (2021)
@@ -132,10 +133,13 @@ public class ResultPanel {
      *
      * @param g Reference to the Graphics object for rendering.
      */
-    public void paint(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.setFont(font);
+    public void paint(Graphics g, Color textColor) {
+        g.setColor(textColor);
+        Font boldFont = new Font("Arial", Font.BOLD, 20);
+        Font normalFont = new Font("Times New Roman", Font.PLAIN, 20);
+        g.setFont(boldFont);
         g.drawString(correctPosAndColourStr + correctPosAndColour, xOffset, yOffset+17);
+        g.setFont(normalFont);
         g.drawString(correctColourWrongPosStr + correctColourWrongPos, xOffset, yOffset+37);
     }
 }

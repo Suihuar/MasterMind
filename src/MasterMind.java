@@ -5,8 +5,8 @@
  * By filling in your student information, it is the same as 
  * declaring your work abides by the university guideline on 
  * academic honesty.
- * Student Name:  
- * Student ID:    
+ * Student Name:  Weihua SUN
+ * Student ID:    1155157063
  * 
  * 
  * Declaration of the use of AI tools:
@@ -45,7 +45,7 @@ public class MasterMind implements KeyListener {
      * Creates the JFrame and sets up the GamePanel to manage all the game state.
      */
     public MasterMind() {
-        JFrame frame = new JFrame("Master Mind: STUDENT_ID");
+        JFrame frame = new JFrame("Master Mind: 1155157063");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
