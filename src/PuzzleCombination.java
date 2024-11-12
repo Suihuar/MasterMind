@@ -16,7 +16,7 @@ public class PuzzleCombination {
     /**
      * List of the colours to use for visualising the pattern.
      */
-    private static final Color[] ID_TO_COLOUR = { Color.WHITE, Color.BLACK, Color.RED, Color.ORANGE, Color.BLUE, Color.GREEN };
+    private static final Color[] ID_TO_COLOUR = { Color.WHITE, Color.BLACK, Color.RED, Color.ORANGE, Color.BLUE, Color.GREEN, Color.MAGENTA};
     /**
      * Number of colours available to be used by other classes.
      */
@@ -78,7 +78,7 @@ public class PuzzleCombination {
     public void cycleCombination(int position, boolean cycleUp) {
         if(cycleUp) {
             combination[position]++;
-            combination[position] = combination[position] % NUMBER_OF_COLOURS;
+          combination[position] = combination[position] % NUMBER_OF_COLOURS;
         } else {
             combination[position]--;
             if(combination[position] < 0)
